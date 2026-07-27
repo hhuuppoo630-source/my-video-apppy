@@ -3,13 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎬 مشغل الفيديو - MediaFire</title>
+    <title>محول روابط ميديا فاير</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -17,236 +12,131 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            margin: 0;
             padding: 20px;
         }
         .container {
-            background: rgba(255, 255, 255, 0.95);
+            background: white;
             padding: 40px;
-            border-radius: 25px;
+            border-radius: 20px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            text-align: center;
-            max-width: 700px;
+            max-width: 500px;
             width: 100%;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
-        }
-        .logo {
-            font-size: 48px;
-            margin-bottom: 10px;
         }
         h1 {
             color: #333;
-            font-size: 28px;
-            margin-bottom: 20px;
+            text-align: center;
+            margin-bottom: 10px;
         }
-        .loader {
-            border: 6px solid #f3f3f3;
-            border-top: 6px solid #667eea;
-            border-radius: 50%;
-            width: 70px;
-            height: 70px;
-            animation: spin 1s linear infinite;
-            margin: 30px auto;
+        p {
+            color: #666;
+            text-align: center;
+            margin-bottom: 30px;
         }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        .status {
-            color: #555;
-            font-size: 18px;
-            margin: 20px 0;
-            padding: 10px;
-            border-radius: 10px;
-            background: #f8f9fa;
-        }
-        .status.loading {
-            color: #667eea;
-        }
-        .status.success {
-            color: #27ae60;
-            background: #d5f5e3;
-        }
-        .status.error {
-            color: #e74c3c;
-            background: #fadbd8;
-        }
-        .video-container {
-            display: none;
-            margin-top: 25px;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-        video {
+        input[type="url"] {
             width: 100%;
-            display: block;
-            background: #000;
-        }
-        .error {
-            display: none;
-            color: #e74c3c;
-            background: #fadbd8;
-            padding: 15px;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
             border-radius: 10px;
-            margin-top: 15px;
+            font-size: 16px;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
         }
-        .retry-btn {
-            background: #667eea;
+        input[type="url"]:focus {
+            border-color: #667eea;
+            outline: none;
+        }
+        button {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
-            padding: 10px 30px;
-            border-radius: 25px;
-            font-size: 16px;
+            border-radius: 10px;
+            font-size: 18px;
             cursor: pointer;
             margin-top: 15px;
             transition: transform 0.2s;
+        }
+        button:hover {
+            transform: scale(1.02);
+        }
+        .result {
+            margin-top: 25px;
+            padding: 20px;
+            background: #f0f4ff;
+            border-radius: 10px;
             display: none;
         }
-        .retry-btn:hover {
-            transform: scale(1.05);
+        .result.show {
+            display: block;
+            animation: fadeIn 0.5s;
         }
-        .progress-bar {
-            width: 100%;
-            height: 4px;
-            background: #e0e0e0;
-            border-radius: 2px;
-            margin: 20px 0;
-            overflow: hidden;
-            display: none;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        .progress-bar .fill {
-            height: 100%;
-            background: linear-gradient(90deg, #667eea, #764ba2);
-            width: 0%;
-            animation: progress 10s ease-in-out infinite;
+        .result a {
+            color: #667eea;
+            word-break: break-all;
+            display: block;
+            margin-top: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+            text-decoration: none;
+            border: 1px solid #667eea;
         }
-        @keyframes progress {
-            0% { width: 0%; }
-            50% { width: 70%; }
-            100% { width: 100%; }
+        .error {
+            color: #e74c3c;
+            margin-top: 10px;
+            text-align: center;
+        }
+        .copy-btn {
+            background: #27ae60;
+            margin-top: 10px;
+        }
+        .copy-btn:hover {
+            background: #2ecc71;
         }
         .footer {
-            margin-top: 20px;
+            text-align: center;
             color: #999;
+            margin-top: 30px;
             font-size: 14px;
-        }
-        @media (max-width: 600px) {
-            .container {
-                padding: 20px;
-            }
-            h1 {
-                font-size: 22px;
-            }
-            .logo {
-                font-size: 36px;
-            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="logo">🎬</div>
-        <h1>مشغل الفيديو</h1>
+        <h1>🔗 محول روابط ميديا فاير</h1>
+        <p>أدخل رابط ميديا فاير لتحصل على رابط صفحة مخصصة للتشغيل</p>
         
-        <div class="loader" id="loader"></div>
-        <div class="progress-bar"><div class="fill"></div></div>
+        <form method="POST">
+            <input type="url" name="url" placeholder="https://www.mediafire.com/file/..." required>
+            <button type="submit">🚀 تحويل الرابط</button>
+        </form>
         
-        <div class="status loading" id="status">⏳ جاري الحصول على رابط التحميل...</div>
-        
-        <div class="video-container" id="videoContainer">
-            <video id="videoPlayer" controls preload="auto">
-                <source id="videoSource" src="" type="video/mp4">
-                متصفحك لا يدعم تشغيل الفيديو
-            </video>
+        <div class="result {% if success %}show{% endif %}" id="result">
+            <strong>✅ تم إنشاء صفحتك!</strong>
+            <p style="margin-top: 10px; font-size: 14px;">انسخ هذا الرابط وشاركه مع المستخدمين:</p>
+            <a href="{{ page_url }}" target="_blank" id="pageLink">{{ page_url }}</a>
+            <button class="copy-btn" onclick="copyLink()">📋 نسخ الرابط</button>
+            <div class="error" style="display: none;" id="copyMsg">تم النسخ! ✅</div>
         </div>
         
-        <div class="error" id="error">
-            ❌ حدث خطأ في تحميل الفيديو
-            <button class="retry-btn" onclick="getVideoLink()">🔄 إعادة المحاولة</button>
-        </div>
-        
-        <div class="footer">⚡ يتم تشغيل الفيديو مباشرة من MediaFire</div>
+        <div class="footer">⚡ صفحة مخصصة لكل رابط • تنتهي صلاحيتها بعد 30 دقيقة</div>
     </div>
 
     <script>
-        const sessionId = '{{ session_id }}';
-        let attempts = 0;
-        const maxAttempts = 20;
-        let retryInterval;
-
-        async function getVideoLink() {
-            try {
-                const statusEl = document.getElementById('status');
-                const loader = document.getElementById('loader');
-                const errorEl = document.getElementById('error');
-                const retryBtn = document.querySelector('.retry-btn');
-                
-                statusEl.textContent = '⏳ جاري الاتصال بالسيرفر...';
-                statusEl.className = 'status loading';
-                loader.style.display = 'block';
-                errorEl.style.display = 'none';
-                retryBtn.style.display = 'none';
-                
-                const response = await fetch('/get_video_link/' + sessionId);
-                const data = await response.json();
-                
-                if (data.success) {
-                    statusEl.textContent = '✅ تم الحصول على الرابط! جاري التشغيل...';
-                    statusEl.className = 'status success';
-                    
-                    const video = document.getElementById('videoPlayer');
-                    const source = document.getElementById('videoSource');
-                    source.src = data.link;
-                    
-                    video.load();
-                    video.oncanplay = function() {
-                        document.getElementById('videoContainer').style.display = 'block';
-                        loader.style.display = 'none';
-                        document.querySelector('.progress-bar').style.display = 'none';
-                        video.play().catch(e => console.log('Autoplay prevented'));
-                    };
-                    
-                    video.onerror = function() {
-                        showError('❌ فشل تحميل الفيديو. قد يكون الرابط غير صالح.');
-                    };
-                    
-                    clearInterval(retryInterval);
-                } else {
-                    if (attempts < maxAttempts) {
-                        statusEl.textContent = `⏳ ${data.message} (${attempts}/${maxAttempts})`;
-                        attempts++;
-                    } else {
-                        showError('⚠️ انتهى وقت المحاولة. تأكد من الرابط وحاول تحديث الصفحة.');
-                        clearInterval(retryInterval);
-                    }
-                }
-            } catch (error) {
-                showError('❌ حدث خطأ في الاتصال بالسيرفر');
-                console.error('Error:', error);
-            }
+        function copyLink() {
+            const link = document.getElementById('pageLink').href;
+            navigator.clipboard.writeText(link).then(() => {
+                const msg = document.getElementById('copyMsg');
+                msg.style.display = 'block';
+                setTimeout(() => { msg.style.display = 'none'; }, 2000);
+            });
         }
-
-        function showError(message) {
-            document.getElementById('loader').style.display = 'none';
-            document.querySelector('.progress-bar').style.display = 'none';
-            document.getElementById('status').textContent = message;
-            document.getElementById('status').className = 'status error';
-            document.getElementById('error').style.display = 'block';
-            document.querySelector('.retry-btn').style.display = 'inline-block';
-        }
-
-        // بدء المحاولات
-        getVideoLink();
-        
-        // محاولة كل 3 ثواني
-        retryInterval = setInterval(() => {
-            if (attempts < maxAttempts) {
-                getVideoLink();
-            } else {
-                clearInterval(retryInterval);
-            }
-        }, 3000);
     </script>
 </body>
-  </html>
+</html>
