@@ -6,7 +6,7 @@
     <title>محول روابط ميديا فاير</title>
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: Arial, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             display: flex;
@@ -23,16 +23,7 @@
             max-width: 500px;
             width: 100%;
         }
-        h1 {
-            color: #333;
-            text-align: center;
-            margin-bottom: 10px;
-        }
-        p {
-            color: #666;
-            text-align: center;
-            margin-bottom: 30px;
-        }
+        h1 { color: #333; text-align: center; }
         input[type="url"] {
             width: 100%;
             padding: 12px;
@@ -40,103 +31,58 @@
             border-radius: 10px;
             font-size: 16px;
             box-sizing: border-box;
-            transition: border-color 0.3s;
-        }
-        input[type="url"]:focus {
-            border-color: #667eea;
-            outline: none;
         }
         button {
             width: 100%;
             padding: 14px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #667eea;
             color: white;
             border: none;
             border-radius: 10px;
             font-size: 18px;
             cursor: pointer;
             margin-top: 15px;
-            transition: transform 0.2s;
-        }
-        button:hover {
-            transform: scale(1.02);
         }
         .result {
-            margin-top: 25px;
+            margin-top: 20px;
             padding: 20px;
             background: #f0f4ff;
             border-radius: 10px;
             display: none;
         }
-        .result.show {
-            display: block;
-            animation: fadeIn 0.5s;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        .result.show { display: block; }
         .result a {
             color: #667eea;
             word-break: break-all;
             display: block;
-            margin-top: 10px;
             padding: 10px;
             background: white;
             border-radius: 8px;
             text-decoration: none;
             border: 1px solid #667eea;
         }
-        .error {
-            color: #e74c3c;
-            margin-top: 10px;
-            text-align: center;
-        }
-        .copy-btn {
-            background: #27ae60;
-            margin-top: 10px;
-        }
-        .copy-btn:hover {
-            background: #2ecc71;
-        }
-        .footer {
-            text-align: center;
-            color: #999;
-            margin-top: 30px;
-            font-size: 14px;
-        }
+        .error { color: #e74c3c; text-align: center; }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>🔗 محول روابط ميديا فاير</h1>
-        <p>أدخل رابط ميديا فاير لتحصل على رابط صفحة مخصصة للتشغيل</p>
+        <p style="text-align:center;color:#666;">أدخل رابط ميديا فاير لتحصل على رابط مخصص</p>
         
         <form method="POST">
             <input type="url" name="url" placeholder="https://www.mediafire.com/file/..." required>
             <button type="submit">🚀 تحويل الرابط</button>
         </form>
         
-        <div class="result {% if success %}show{% endif %}" id="result">
-            <strong>✅ تم إنشاء صفحتك!</strong>
-            <p style="margin-top: 10px; font-size: 14px;">انسخ هذا الرابط وشاركه مع المستخدمين:</p>
-            <a href="{{ page_url }}" target="_blank" id="pageLink">{{ page_url }}</a>
-            <button class="copy-btn" onclick="copyLink()">📋 نسخ الرابط</button>
-            <div class="error" style="display: none;" id="copyMsg">تم النسخ! ✅</div>
-        </div>
+        {% if error %}
+            <div class="error">{{ error }}</div>
+        {% endif %}
         
-        <div class="footer">⚡ صفحة مخصصة لكل رابط • تنتهي صلاحيتها بعد 30 دقيقة</div>
+        <div class="result {% if success %}show{% endif %}">
+            <strong>✅ تم إنشاء صفحتك!</strong>
+            <p style="font-size:14px;">انسخ هذا الرابط وشاركه:</p>
+            <a href="{{ page_url }}" target="_blank">{{ page_url }}</a>
+        </div>
     </div>
-
-    <script>
-        function copyLink() {
-            const link = document.getElementById('pageLink').href;
-            navigator.clipboard.writeText(link).then(() => {
-                const msg = document.getElementById('copyMsg');
-                msg.style.display = 'block';
-                setTimeout(() => { msg.style.display = 'none'; }, 2000);
-            });
-        }
-    </script>
 </body>
-</html>
+    </html>
