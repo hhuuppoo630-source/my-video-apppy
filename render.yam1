@@ -1,15 +1,10 @@
 services:
   - type: web
-    name: mediafire-player
+    name: mediafire-converter
     runtime: python
-    repo: https://github.com/yourusername/mediafire-player
     plan: free
-    region: oregon
     buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT
+    startCommand: gunicorn app:app
     envVars:
-      - key: SECRET_KEY
-        generateValue: true
-      - key: MEDIAFIRE_URL
-        value: https://www.mediafire.com/file/yr06f6vp7e5hvn6/file
-        sync: false
+      - key: PYTHON_VERSION
+        value: 3.11.0
